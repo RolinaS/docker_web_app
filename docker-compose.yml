@@ -1,0 +1,44 @@
+version: '3'
+services:
+
+  db: 
+    image: mysql:latest
+    environment:
+      - MYSQL_DATABASE= ${MYSQL_DATABASE}
+      - MYSQL_USER= ${MYSQL_USER}
+      - MYSQL_PASSWORD= ${MYSQL_PASSWORD}
+      - MYSQL_ALLOW_EMPTY_PASSWORD=1
+    volumes:
+      - "./database/:/docker-entrypoint-initdb.d" 
+
+  www:
+    image: php:apache
+    volumes:
+      - "./app:/var/www/html" 
+    ports:
+      - 81:80
+      - 443:443 
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - 8001:80
+    environment:
+      - PMA_HOST= ${PMA_HOST}
+      - PMA_PORT= ${PMA_PORT}
+    depends_on:
+      - db
+      
+  mkdocs:
+    container_name: mkdocs
+    image: polinux/mkdocs:1.5.2
+    restart: always
+    ports:
+      - "8002:8000"
+    environment:
+      LIVE_RELOAD_SUPPORT: 'true'
+      ADD_MODULES: 'fontawesome-markdown mkdocs-git-revision-date-localized-plugin mkdocs-material'
+      FAST_MODE: 'true'
+      DOCS_DIRECTORY: '/mkdoc'
+    volumes:
+      - "./mkdoc:/mkdoc"
