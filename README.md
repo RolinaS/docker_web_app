@@ -2,12 +2,12 @@
 
  *Maîtrisez votre diète, dominez votre forme.*
 
-## Objectifs:
+## Objectifs
 
 * Gérer votre régimes alimentaire via le décompte des macros alimentaire.
 * Créer vos recettes personnalisées.
 * Ajouter vos aliments préférés.
 
-## Documentation:
+## Documentation
 
 Aller voir la documentation du projet dans le dossier mkdoc.
