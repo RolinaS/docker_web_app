@@ -2,6 +2,7 @@ version: '3'
 services:
 
   db: 
+    container_name: bdd
     image: mysql:latest
     environment:
       - MYSQL_DATABASE= ${MYSQL_DATABASE}
@@ -12,6 +13,7 @@ services:
       - "./database/:/docker-entrypoint-initdb.d" 
 
   www:
+    container_name: www
     image: php:apache
     volumes:
       - "./app:/var/www/html" 
@@ -20,6 +22,7 @@ services:
       - 443:443 
 
   phpmyadmin:
+    container_name: phpmyadmin
     image: phpmyadmin/phpmyadmin
     ports:
       - 8001:80
