@@ -2,15 +2,17 @@ version: '3'
 services:
 
   db: 
-    container_name: bdd
+    container_name: db
     image: mysql:latest
     environment:
+      - MYSQL_ROOT_PASSWORD= ${MYSQL_ROOT_PASSWORD}
       - MYSQL_DATABASE= ${MYSQL_DATABASE}
       - MYSQL_USER= ${MYSQL_USER}
       - MYSQL_PASSWORD= ${MYSQL_PASSWORD}
-      - MYSQL_ALLOW_EMPTY_PASSWORD=1
     volumes:
       - "./database/:/docker-entrypoint-initdb.d" 
+    ports:
+        - "${MYSQL_PORT}:3306"
 
   www:
     container_name: www
@@ -20,15 +22,22 @@ services:
     ports:
       - 81:80
       - 443:443 
+    depends_on:
+      - db
+      - phpmyadmin
 
   phpmyadmin:
     container_name: phpmyadmin
     image: phpmyadmin/phpmyadmin
     ports:
-      - 8001:80
+      - 8080:80
     environment:
+      - PMA_ARBITRARY=1
       - PMA_HOST= ${PMA_HOST}
-      - PMA_PORT= ${PMA_PORT}
+      #- PMA_PORT= ${PMA_PORT}
+      - MYSQL_USER= ${PMA_USER}
+      - MYSQL_PASSWORD= ${PMA_PASSWORD}
+      - MYSQL_ROOT_PASSWORD= ${PMA_ROOT_PASSWORD}
     depends_on:
       - db
       
