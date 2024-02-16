@@ -7,7 +7,6 @@ services:
     ports:
       - "3306:3306"
     environment:
-<<<<<<< HEAD
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
@@ -19,55 +18,22 @@ services:
   www:
     image: mon-php-mysql
     container_name: www
-=======
-      - MYSQL_ROOT_PASSWORD= ${MYSQL_ROOT_PASSWORD}
-      - MYSQL_DATABASE= ${MYSQL_DATABASE}
-      - MYSQL_USER= ${MYSQL_USER}
-      - MYSQL_PASSWORD= ${MYSQL_PASSWORD}
-    volumes:
-      - "./database/:/docker-entrypoint-initdb.d" 
-    ports:
-        - "${MYSQL_PORT}:3306"
-
-  www:
-    container_name: www
-    image: php:apache
->>>>>>> 5d00493606b380e0f665128386f4c035f00bf03f
     volumes:
       - "./app:/var/www/html"
     ports:
       - 81:80
-<<<<<<< HEAD
       - 443:443
     depends_on:
       - db
 
   phpmyadmin:
     container_name: pma
-=======
-      - 443:443 
-    depends_on:
-      - db
-      - phpmyadmin
-
-  phpmyadmin:
-    container_name: phpmyadmin
->>>>>>> 5d00493606b380e0f665128386f4c035f00bf03f
     image: phpmyadmin/phpmyadmin
     ports:
       - 8080:80
     environment:
-<<<<<<< HEAD
       PMA_HOST: ${PMA_HOST}
       PMA_PORT: ${PMA_PORT}
-=======
-      - PMA_ARBITRARY=1
-      - PMA_HOST= ${PMA_HOST}
-      #- PMA_PORT= ${PMA_PORT}
-      - MYSQL_USER= ${PMA_USER}
-      - MYSQL_PASSWORD= ${PMA_PASSWORD}
-      - MYSQL_ROOT_PASSWORD= ${PMA_ROOT_PASSWORD}
->>>>>>> 5d00493606b380e0f665128386f4c035f00bf03f
     depends_on:
       - db
       
