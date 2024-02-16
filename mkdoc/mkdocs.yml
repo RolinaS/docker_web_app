@@ -1,4 +1,8 @@
 site_name: Documentation du site
+site_url: http://localhost:8002
+
+nav:
+  - Home: index.md
 
 theme:
   name: material

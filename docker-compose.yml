@@ -4,6 +4,8 @@ services:
   db: 
     container_name: db
     image: mysql:latest
+    ports:
+      - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
@@ -11,16 +13,18 @@ services:
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_ALLOW_EMPTY_PASSWORD: 1
     volumes:
-      - "./database/:/docker-entrypoint-initdb.d" 
+      - "./database/data:/docker-entrypoint-initdb.d" 
 
   www:
+    image: mon-php-mysql
     container_name: www
-    image: php:apache
     volumes:
-      - "./app:/var/www/html" 
+      - "./app:/var/www/html"
     ports:
       - 81:80
-      - 443:443 
+      - 443:443
+    depends_on:
+      - db
 
   phpmyadmin:
     container_name: pma
